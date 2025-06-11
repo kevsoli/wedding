@@ -13,7 +13,17 @@ window.addEventListener("scroll", function()
 {
     let offset = window.pageYOffset;
     offset-=3100;
-    parallax1.style.backgroundPositionY = offset*(0.1) + "px";
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    // Calculate baseOffset only in landscape mode
+    let baseOffset = 0;
+    if (width > height) {
+        baseOffset = -(width - height) * 0.25; // Adjust multiplier to control strength
+    }
+
+    parallax1.style.backgroundPositionY = baseOffset + offset*(0.1) + "px";
 })
 
 window.addEventListener("scroll", function()

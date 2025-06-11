@@ -421,7 +421,7 @@ a:hover{
     width: 40vw;
     background-image: url("media/last.jpg");
     background-size: cover;
-    background-position-y: bottom;
+    background-position-y: top;
     background-repeat: no-repeat;
     /* background-attachment: fixed; */
 }
