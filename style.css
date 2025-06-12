@@ -181,7 +181,7 @@ a:hover{
 .home-img{
     background-image: url("media/home.jpg");
     background-size: cover;
-    background-position: center;
+    background-position-y: -30px;
 }
 .home-img-sm{
     display: none;
@@ -193,7 +193,8 @@ a:hover{
     display: block;
     height: 110vh;
     width: 50vw;
-    background-position-x: -100px;
+    background-position-x: 0px;
+    
 }
 @media (max-width:1000px){
     .container-out{

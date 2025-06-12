@@ -1,12 +1,12 @@
-const parallax = document.getElementById("home-img-lg");
+// const parallax = document.getElementById("home-img-lg");
 const parallax1 = document.getElementById("parallax1");
 const parallax2 = document.getElementById("parallax2");
 
-window.addEventListener("scroll", function()
-{
-    let offset = window.pageYOffset;
-    parallax.style.backgroundPositionX = offset*(-0.3)-100 + "px";
-})
+// window.addEventListener("scroll", function()
+// {
+//     let offset = window.pageYOffset;
+//     // parallax.style.backgroundPositionX = Math.sin(offset*0.01) * 10 - 50+ "px";
+// })
 
 
 window.addEventListener("scroll", function()
