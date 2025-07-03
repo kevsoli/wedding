@@ -24,6 +24,7 @@
 }
 html{
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 .hz-margin{
     padding: 0 var(--horizontal-margin-spacing);
@@ -181,19 +182,18 @@ a:hover{
 .home-img{
     background-image: url("media/home.jpg");
     background-size: cover;
-    background-position-y: -30px;
 }
 .home-img-sm{
     display: none;
     width: 100%;
     margin: 20px 0 0 0;
-    height: 50vh;
+    height: 70vh;
 }
 #home-img-lg{
     display: block;
     height: 110vh;
     width: 50vw;
-    background-position-x: 0px;
+    background-position-x: center;
     
 }
 @media (max-width:1000px){
@@ -477,4 +477,147 @@ footer{
 footer h2{
     font-size: 2Srem;
     font-weight: normal;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-content {
+  position: relative;
+  z-index: 2;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  animation: fadeIn 0.3s ease;
+}
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+input, select, button {
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+.message {
+  margin-top: 1rem;
+  font-size: 1rem;
+  /* color: #333; */
+}
+.hidden {
+  display: none;
+}
+.message {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  /* font-size: 1rem; */
+  /* color: #333; */
+  text-align: center;
+  line-height: 1.6;
+}
+.mb-4 {
+  margin-bottom: 1rem; /* or 16px */
+}
+.plus-label {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #444;
+}
+.disclaimer {
+  font-size: 0.75rem;
+  color: #777;
+  margin-top: 0.5rem;
+  text-align: left;
+}
+.disclaimer {
+  font-size: 0.75rem;
+  color: #777;
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+.disclaimer.left-align {
+  text-align: left;
+}
+
+/* animation */
+.fade-out {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.fade-out2 {
+  animation: fadeOut2 0.3s ease forwards;
+}
+
+@keyframes fadeOut2 {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-in2 {
+  animation: fadeIn2 0.3s ease forwards;
+}
+
+@keyframes fadeIn2 {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
