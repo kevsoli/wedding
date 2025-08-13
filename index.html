@@ -18,9 +18,9 @@
         </label>
         <label class="logo">K&E</label>
         <ul class="text">
-            <li><a href="#story" onclick="myFunction()">OUR STORY</a></li>
-            <li><a href="#stay" onclick="myFunction()">TRAVEL & STAY</a></li>
-            <li><a href="#registry" onclick="myFunction()">PROMISES</a></li>
+            <li><a href="#story" >OUR STORY</a></li>
+            <li><a href="#stay">WEDDING DETAILS</a></li>
+            <li><a href="#registry" >PROMISES</a></li>
         </ul>
     </nav>
 
@@ -34,7 +34,7 @@
                 Saturday, Nov. 8, 2025 <br>
                 Our Lady of Ephesus Chapel, Silang, Cavite
 
-                <button class="huge-btn" id="rsvp1">RSVP</button>
+                <button class="huge-btn hidden" id="rsvp1">RSVP</button>
             </div>
             <div class="home-img" id="home-img-lg"></div>
         </div>
@@ -130,28 +130,28 @@
 
 
             <div id="stay">
-                <h2 class="reveal">Travel and Stay</h2>
+                <h2 class="reveal">WEDDING DETAILS</h2>
                 <div class="stay-container reveal">
                     <div class="stay-item">
                         <h3>01. <br>
-                            Getting There
+                            The Wedding Entourage 
                         </h3>
-                        <div class="text">Easy-to-follow <br> directions to the venue</div>
-                        <div class="text links">MAP & DETAILS</div>
+                        <div class="text">A list of the wonderful people <br> who hold a special place in our hearts</div>
+                        <div class="text links" id="view1">VIEW ENTOURAGE</div>
                     </div>
                     <div class="stay-item">
                         <h3>02. <br>
-                            Once You're There
+                            Attire Guide
                         </h3>
-                        <div class="text">Some fun things to do in <br> the area</div>
-                        <div class="text links">OUR RECOMMENDATIONS</div>
+                        <div class="text">Dress to match the celebration! <br> What to wear for the ceremony and reception</div>
+                        <div class="text links">VIEW ATTIRE DETAILS</div>
                     </div>
                     <div class="stay-item">
                         <h3>03. <br>
-                            Where to Stay
+                            Getting to the Venue
                         </h3>
-                        <div class="text">Hotels and B&Bs <br> to check out</div>
-                        <div class="text links">LODGING OPTIONS</div>
+                        <div class="text">Maps and navigation options <br> to help you arrive smoothly</div>
+                        <div class="text links">GET DIRECTIONS</div>
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@
 
             <div class="parting-message reveal">
                 <h1>Hope to See You!</h1>
-                <button class="huge-btn" id="rsvp2">RSVP</button>
+                <button class="huge-btn hidden" id="rsvp2" >RSVP</button>
             </div>
 
 
@@ -187,6 +187,110 @@
         </div>
     </div>
 
-    <script src="main.js"></script>
+    <div id="rsvpSubmitModal" class="modal hidden">
+        <div class="modal-content center-text">
+            <div id="rsvpLoading" class="rsvp-status">
+            <div class="loader"></div>
+            <p>Sending RSVP…</p>
+            </div>
+            <div id="rsvpSuccess" class="rsvp-status">
+            <p class="success-text">🎉 RSVP submitted successfully!</p>
+            </div>
+            <div id="rsvpError" class="rsvp-status">
+            <p class="error-text">❌ Something went wrong while submitting your RSVP.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entourage Modal -->
+    <div class="overlay hidden" id="entourageOverlay"></div>
+    <div id="entourageModal" class="modal hidden">
+    <div id="modalOverlay" class="modal-overlay"></div>
+    <div class="modal-content entourage-modal-content">
+        <span id="closeEntourageModal" class="close">&times;</span>
+
+        <div class="entourage-container">
+        <h2 class="centered-title">SOLIMAN - ARROYO NUPTIALS</h2>
+
+        <h3 class="centered-title">OUR PARENTS</h3>
+        <div class="row">
+            <div class="left-name">Mr. Enrique Soliman</div>
+            <div class="right-name">Mr. Ramon Arroyo</div>
+        </div>
+        <div class="row">
+            <div class="left-name">Mrs. Gloria Soliman</div>
+            <div class="right-name">Mrs. Regina Arroyo</div>
+        </div>
+
+        <h3 class="centered-title">TO WITNESS OUR VOWS</h3>
+        <div class="row">
+            <div class="left-name">Atty. Leo Marlon Realo</div>
+            <div class="right-name">Dr. Thelma Alocha - Bernardino</div>
+        </div>
+        <div class="row">
+            <div class="left-name">Mr. Charlie Villamin</div>
+            <div class="right-name">Mrs. Dinah Dino</div>
+        </div>
+        <div class="row">
+            <div class="left-name">Mr. Jose Yu Jr</div>
+            <div class="right-name">Mrs. Pamela Guevara - Peñas</div>
+        </div>
+
+        <h3 class="centered-title">TO HELP US IN OUR NEEDS</h3>
+        <div class="row bold-row">
+            <div class="left-name">BEST MAN</div>
+            <div class="right-name">MAID OF HONOR</div>
+        </div>
+        <div class="row">
+            <div class="left-name">Mr. John Paul Bocalbos</div>
+            <div class="right-name">Ms. Jade Arroyo</div>
+        </div>
+
+        <div class="row bold-row">
+            <div class="left-name">TO LIGHT OUR PATH</div>
+            <div class="right-name">TO CLOTHE US AS ONE</div>
+        </div>
+        <div class="row">
+            <div class="left-name">Ms. Toni Anne Salinas</div>
+            <div class="right-name">Ms. Candace Manaois</div>
+        </div>
+        <div class="row">
+            <div class="left-name">Mr. Erik John Moreno</div>
+            <div class="right-name">Mr. John Russel Usi</div>
+        </div>
+
+        <h3 class="centered-title">TO BIND US TOGETHER</h3>
+        <div class="single-centered">Mrs. Alyssa Pearl Bracamonte</div>
+        <div class="single-centered">Mr. Alexander Robert Abrencillo</div>
+
+        <h3 class="centered-title">TO GUIDE US FORWARD</h3>
+        <div class="row">
+            <div class="left-name">Mr. Jansen Sobria</div>
+            <div class="right-name">Mrs. Loug Banalo - Gesmundo</div>
+        </div>
+        <div class="row">
+            <div class="left-name">Mr. Marvin Labrador</div>
+            <div class="right-name">Ms. Carlota Potestades</div>
+        </div>
+        <div class="row">
+            <div class="left-name">Mr. Glenn Gabarda</div>
+            <div class="right-name">Mrs. Katherine Soliman - Umali</div>
+        </div>
+
+        <h3 class="centered-title">TO SHOWER US WITH PETALS</h3>
+        <div class="single-centered">Ms. Janice Arroyo</div>
+        <div class="single-centered">Ms. Divine Grace Arroyo</div>
+        <div class="single-centered">Ms. Irish Anne Arroyo</div>
+        <div class="single-centered">Ms. Francine Isabel Potestades</div>
+
+        <h3 class="centered-title">BEARERS</h3>
+        <div class="single-centered">Bible - France Andrei Potestades</div>
+        <div class="single-centered">Ring - Matt Pasquale Potestades</div>
+        <div class="single-centered">Coin - Matias Avenido</div>
+        </div>
+    </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
 </body>
 </html>

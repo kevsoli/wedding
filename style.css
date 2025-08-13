@@ -508,6 +508,12 @@ footer h2{
   max-width: 500px;
   animation: fadeIn 0.3s ease;
 }
+.modal-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: transparent; /* or rgba(0,0,0,0) */
+  z-index: 10;
+}
 .close {
   position: absolute;
   top: 1rem;
@@ -563,6 +569,128 @@ input, select, button {
 }
 .disclaimer.left-align {
   text-align: left;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #555;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 10px;
+  animation: spin 1s linear infinite;
+}
+
+.success-text {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error-text {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
+
+.rsvp-status {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Modal styles for Entourage */
+.entourage-modal-content {
+  max-width: 750px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 2rem 2.5rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgb(0 0 0 / 0.25);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  position: relative;
+  z-index: 1001;  /* Higher z-index than overlay */
+}
+
+/* Overlay shared with other modals */
+#entourageOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 1000;
+  cursor: pointer;
+}
+
+/* Close button */
+#closeEntourageModal {
+  position: absolute;
+  top: 0.6rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #444;
+  font-weight: 700;
+}
+
+/* Container */
+.entourage-container {
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+.centered-title {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  color: #222;
+}
+
+/* Rows with left/right names */
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem 0;
+  border-bottom: 1px dotted #ccc;
+}
+
+.bold-row {
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-bottom: none;
+  margin-top: 1.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.left-name,
+.right-name {
+  width: 45%;
+}
+
+.left-name {
+  text-align: left;
+}
+
+.right-name {
+  text-align: right;
+}
+
+/* Single centered names */
+.single-centered {
+  text-align: center;
+  margin: 0.4rem 0;
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* animation */

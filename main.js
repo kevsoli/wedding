@@ -1,15 +1,43 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// Replace these values with your actual Firebase config
+const firebaseConfig = {
+    apiKey: "AIzaSyB5usLOtpEiZgIMceVWU6mUM21yNM49FKE",
+    authDomain: "weddingrsvp-45942.firebaseapp.com",
+    projectId: "weddingrsvp-45942",
+    storageBucket: "weddingrsvp-45942.firebasestorage.app",
+    messagingSenderId: "533864515136",
+    appId: "1:533864515136:web:1f5235739e1fb3d6f1c1a5"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// ✅ Initialize Firestore (after app init)
+const db = getFirestore(app);
+
+let guestList;
+fetchGuestList().then((data) => {
+  guestList = data.guestList;
+  guestDataById = data.guestDataById;
+
+  // console.log(data);
+});
 // const parallax = document.getElementById("home-img-lg");
 const parallax1 = document.getElementById("parallax1");
 const parallax2 = document.getElementById("parallax2");
 
 let animatingIn = false;
+let message = ""
 
 // window.addEventListener("scroll", function()
 // {
 //     let offset = window.pageYOffset;
 //     // parallax.style.backgroundPositionX = Math.sin(offset*0.01) * 10 - 50+ "px";
 // })
-
+window.addEventListener("load", () => {
+  window.scrollTo(0, 0);
+});
 
 window.addEventListener("scroll", function()
 {
@@ -36,9 +64,8 @@ window.addEventListener("scroll", function()
 })
 
 function myFunction() {
-    document.getElementById("check").checked = false;
-  }
-
+  document.getElementById("check").checked = false;
+}
 
   
 function reveal() {
@@ -59,11 +86,11 @@ for (var i = 0; i < reveals.length; i++) {
   
 window.addEventListener("scroll", reveal);
 
-const guestList = {
-  "kevin soliman": 4,
-  "sarah cruz": 2,
-  "john doe": 0
-};
+// const guestList = {
+//   "kevin soliman": 4,
+//   "sarah cruz": 2,
+//   "john doe": 0
+// };
 
 document.getElementById("rsvp1").onclick = () => {
   showRSVPForm();
@@ -73,20 +100,270 @@ document.getElementById("rsvp2").onclick = () => {
   showRSVPForm();
 };
 
-document.getElementById("submitRSVP").onclick = () => {
-  console.log("submit");
+document.getElementById("view1").onclick = () => {
+  document.getElementById('entourageModal').classList.remove('hidden');
+  document.getElementById('entourageOverlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+
+  document.getElementById('entourageModal').classList.add("fade-in");
+  document.getElementById('entourageOverlay').classList.add("fade-in2");
 };
+
+// Close Entourage Modal
+document.getElementById('closeEntourageModal').onclick = () => {
+  animateOutEntourage();
+};
+document.getElementById('modalOverlay').onclick = () => {
+  animateOutEntourage();
+};
+
+function animateOutEntourage() {
+  document.getElementById('entourageModal').classList.remove("fade-in");
+  document.getElementById('entourageOverlay').classList.remove("fade-in2");
+
+  document.getElementById('entourageModal').classList.add("fade-out");
+  document.getElementById('entourageOverlay').classList.add("fade-out2");
+
+  setTimeout(() => {
+    document.getElementById('entourageModal').classList.remove("fade-out");
+    document.getElementById('entourageOverlay').classList.remove("fade-out2");
+
+    document.getElementById('entourageModal').classList.add('hidden');
+    document.getElementById('entourageOverlay').classList.add('hidden');
+    document.body.style.overflow = '';
+  }, 300);
+}
+
+document.getElementById("submitRSVP").onclick = async () => {
+  const rawName = document.getElementById("guestName").value.trim();
+  const name = rawName.toLowerCase();
+
+  const guestId = guestList[name];
+  const guestData = guestDataById?.[guestId];
+
+  if (!guestId || !guestData) {
+    showRSVPModal("error");
+    return;
+  }
+
+  const willAttend = document.getElementById("willAttend").value === "yes";
+  const email = document.getElementById("email").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+
+  const plusOnes = [];
+  document.querySelectorAll("#plusOnesContainer input").forEach((input) => {
+    const val = input.value.trim();
+    if (val) plusOnes.push(val);
+  });
+
+  const rsvpData = {
+    id: guestData.id,
+    name: rawName,
+    willAttend,
+    email,
+    mobile,
+    plusOnes,
+    secretKey: "MY_SUPER_SECRET_KEY"
+  };
+
+  document.querySelector(".modal-content").classList.remove("fade-in");
+  document.querySelector(".modal-content").classList.remove("fade-out");
+
+  document.querySelector(".modal-content").classList.add("fade-out");
+  setTimeout(() => {
+    document.querySelector(".modal-content").classList.remove("fade-out");
+    document.querySelector(".modal-content").classList.add("hidden");
+    document.body.style.overflow = "";
+    hideForms();
+  }, 300);
+
+  message = `
+    Thank you for responding!  
+    We're so happy you'll be joining us on our special day.  
+    We can't wait to celebrate together!
+  `;
+
+  showRSVPModal("loading");
+
+  try {
+    await submitRSVP(rsvpData);
+    showRSVPModal("success");
+  } catch (error) {
+    console.error(error);
+    showRSVPModal("error");
+  }
+};
+
+async function submitRSVP(data) {
+  await setDoc(doc(db, "rsvps", data.id), data);
+}
+
+function showRSVPModal(status) {
+  const modal = document.getElementById("rsvpSubmitModal");
+  
+  if (modal.classList.contains("hidden")) {
+    modal.classList.add("fade-in");
+    updateRSVPModal(status);
+    setTimeout(() => {
+      modal.classList.remove("fade-in");
+    }, 300);
+  } else {
+    modal.classList.add("fade-out");
+    setTimeout(() => {
+      updateRSVPModal(status);
+      modal.classList.remove("fade-out");
+      modal.classList.add("fade-in");
+      setTimeout(() => {
+        modal.classList.remove("fade-in");
+      }, 300);
+
+    }, 300);
+  }
+
+  // Always show the modal container
+  modal.classList.remove("hidden");  
+}
+
+function updateRSVPModal(status) {
+  const loading = document.getElementById("rsvpLoading");
+  const success = document.getElementById("rsvpSuccess");
+  const error = document.getElementById("rsvpError");
+
+  // Hide all inner status views first
+  loading.style.display = "none";
+  success.style.display = "none";
+  error.style.display = "none";
+
+  // Show only the one that matches the status
+  if (status === "loading") {
+    loading.style.display = "flex";
+  } else if (status === "success") {
+    success.style.display = "flex";
+    animateOutRSVPModal();
+  } else if (status === "error") {
+    message = `Please try submitting your RSVP again shortly. If the issue continues, don't hesitate to contact us directly. Thank you!`
+    error.style.display = "flex";
+    animateOutRSVPModal();
+  }
+}
+
+function animateOutRSVPModal() {
+  const modal = document.getElementById("rsvpSubmitModal");
+
+  setTimeout(() => {
+      modal.classList.add("fade-out");
+      setTimeout(() => {
+        modal.classList.remove("fade-out");
+        modal.classList.add("hidden");
+        animateOutRSVPCompleted();
+      }, 300);
+    }, 2000);
+}
+
+function animateOutRSVPCompleted() {
+  const messageDiv = document.getElementById("rsvpMessage");
+  messageDiv.classList.remove("hidden");
+  document.querySelector(".modal-content").classList.remove("hidden");
+
+  // setTimeout(() => {
+    document.querySelector(".modal-content").classList.remove("fade-out");
+    document.querySelector(".modal-content").classList.add("fade-in");
+
+    hideRSVPForm(true);
+    messageDiv.innerHTML = message;
+    animatePopupOut(5000);
+  // }, 300);
+}
+
+async function willNotAttend() {
+  const rawName = document.getElementById("guestName").value.trim();
+  const name = rawName.toLowerCase();
+
+  const guestId = guestList[name]; // guestList maps normalized name → ID
+  const guestData = guestDataById?.[guestId];
+
+  if (!guestId || !guestData || typeof guestId !== "string") {
+    console.error("Guest not found or invalid guestId:", guestId);
+    showRSVPModal("error");
+    return;
+  }
+
+  const rsvpData = {
+    id: guestId,
+    name: rawName,
+    willAttend: false,
+    email: "n/a",
+    mobile: "n/a",
+    plusOnes: [],
+    secretKey: "MY_SUPER_SECRET_KEY"
+  };
+
+  showRSVPModal("loading");
+
+  try {
+    await submitRSVP(rsvpData);
+    showRSVPModal("success");
+  } catch (error) {
+    console.error("RSVP submit error:", error);
+    showRSVPModal("error");
+  }
+}
+
+async function fetchGuestList() {
+  const guestCollection = collection(db, "guests");
+  const guestSnapshot = await getDocs(guestCollection);
+  const guestList = {};        // name variations → ID
+  const guestDataById = {};    // ID → full guest data
+
+  guestSnapshot.forEach((doc) => {
+    const id = doc.id;
+    const data = doc.data();
+    guestDataById[id] = data;
+
+    const lastName = data.lastName ? data.lastName.toLowerCase().trim() : "";
+
+    // Add display names
+    (data.displayNames || []).forEach((fullName) => {
+      guestList[fullName.toLowerCase().trim()] = id;
+    });
+
+    // Add full names from 'names' array
+    (data.names || []).forEach((guest) => {
+      const firstName = guest.firstName?.toLowerCase().trim() || "";
+      const fullName = `${firstName} ${lastName}`;
+      guestList[fullName] = id;
+
+      // Add nicknames + last name
+      (guest.nicknames || []).forEach((nickname) => {
+        const combo = `${nickname.toLowerCase().trim()} ${lastName}`;
+        guestList[combo] = id;
+      });
+    });
+  });
+
+  // Reveal UI
+  document.getElementById("rsvp1").classList.remove("hidden");
+  document.getElementById("rsvp2").classList.remove("hidden");
+  document.getElementById("rsvp1").classList.add("fade-in");
+  document.getElementById("rsvp2").classList.add("fade-in");
+
+  // Store both globally if needed
+  window.guestList = guestList;
+  window.guestDataById = guestDataById;
+
+  return { guestList, guestDataById };
+}
 
 document.getElementById("closeModal").onclick = () => {
   // document.getElementById("rsvpModal").classList.add("hidden");
   // document.body.style.overflow = "";
-  this.animatePopupOut(0);
+  animatePopupOut(0);
 };
 
 // Optional: close on click outside
 document.getElementById("rsvpModal").addEventListener("click", (e) => {
   if (e.target.id === "overlay") {
-    this.animatePopupOut(0);
+    animatePopupOut(0);
   }
 });
 
@@ -97,6 +374,11 @@ function hideRSVPForm(hideCloseButton) {
 }
 
 function showRSVPForm() {
+  hideForms();
+  animatePopupIn();
+}
+
+function hideForms() {
   // Reset form visibility
   document.getElementById("rsvpModal").classList.remove("hidden");
   document.body.style.overflow = "hidden";
@@ -120,8 +402,6 @@ function showRSVPForm() {
 
   // const container = document.getElementById("plusOnesContainer");
   // container.innerHTML = ""; // Clear previous content
-
-  animatePopupIn();
 }
 
 function animatePopupIn() {
@@ -161,14 +441,18 @@ function animatePopupOut(delay) {
 document.getElementById("rsvpStep1").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const name = document.getElementById("guestName").value.trim().toLowerCase();
+  const rawName = document.getElementById("guestName").value.trim();
+  const name = rawName.toLowerCase();
   const willAttend = document.getElementById("willAttend").value;
   const messageDiv = document.getElementById("rsvpMessage");
 
-  let onList = guestList.hasOwnProperty(name);
+  // Find guest ID by name
+  const guestId = guestList[name];
+  const guestData = guestDataById?.[guestId];
+
+  const onList = !!guestData;
 
   messageDiv.classList.remove("hidden");
-
   document.querySelector(".modal-content").classList.add("fade-out");
 
   if (!onList && willAttend === "yes") {
@@ -205,53 +489,72 @@ document.getElementById("rsvpStep1").addEventListener("submit", function (e) {
   }
 
   if (onList && willAttend === "no") {
-    setTimeout(() => {
-      document.querySelector(".modal-content").classList.remove("fade-out");
-      document.querySelector(".modal-content").classList.add("fade-in");
-
-      hideRSVPForm(true);
-      messageDiv.innerHTML = `
-        Thank you for responding.  
-        We're sad to hear you can't make it, but truly appreciate you taking the time to RSVP.
-      `;
-      animatePopupOut(4000);
-    }, 300);
     
+    message = `
+      Thank you for responding.  
+      We're sad to hear you can't make it, but truly appreciate you taking the time to RSVP.
+    `;
+    
+    willNotAttend();
+    // setTimeout(() => {
+    //   document.querySelector(".modal-content").classList.remove("fade-out");
+    //   document.querySelector(".modal-content").classList.add("fade-in");
+
+    //   hideRSVPForm(true);
+    //   messageDiv.innerHTML = `
+    //     Thank you for responding.  
+    //     We're sad to hear you can't make it, but truly appreciate you taking the time to RSVP.
+    //   `;
+    //   animatePopupOut(4000);
+    // }, 300);
+
     return;
   }
 
   if (onList && willAttend === "yes") {
-    setTimeout(() => {
-      document.querySelector(".modal-content").classList.remove("fade-out");
-      document.querySelector(".modal-content").classList.add("fade-in");
-      
-      hideRSVPForm(false);
-      // messageDiv.classList.remove("hidden");
-      // messageDiv.innerHTML = "Thank you for allotting your time for our wedding day!";
+  setTimeout(() => {
+    document.querySelector(".modal-content").classList.remove("fade-out");
+    document.querySelector(".modal-content").classList.add("fade-in");
 
-      // Show Step 2 form
-      document.getElementById("rsvpStep2").classList.remove("hidden");
+    hideRSVPForm(false);
 
-      // Add plus-one fields if needed
-      const guestData = guestList[document.getElementById("guestName").value.trim().toLowerCase()];
+    // Show Step 2 form
+    document.getElementById("rsvpStep2").classList.remove("hidden");
 
-      const container = document.getElementById("plusOnesContainer");
-      container.innerHTML = ""; // Clear previous content
+    // Get guest ID and data
+    const guestId = guestList[name];
+    const guestData = guestDataById?.[guestId];
 
-      if (guestData > 0) {
+    const plusGuests = guestData?.plus || 0;
+    const container = document.getElementById("plusOnesContainer");
+    container.innerHTML = ""; // Clear previous content
+
+    if (plusGuests > 0 && guestData?.names?.length > 0) {
+      container.innerHTML += `
+        <p class="plus-label">Additional Guests</p>
+        <p class="disclaimer left-align">Leave the box empty if you have no additional guest.</p>
+      `;
+
+      const lowerInput = name.toLowerCase();
+
+      // Filter out the main name used during RSVP
+      const otherNames = guestData.names.filter((n) => {
+        const full = `${n.firstName} ${guestData.lastName}`.toLowerCase();
+        const nickMatches = (n.nicknames || []).some((nick) =>
+          `${nick} ${guestData.lastName}`.toLowerCase() === lowerInput
+        );
+        return full !== lowerInput && !nickMatches;
+      });
+
+      for (let i = 0; i < plusGuests; i++) {
+        const plusName = otherNames[i]
+          ? `${otherNames[i].firstName} ${guestData.lastName}`
+          : "";
         container.innerHTML += `
-          <p class="plus-label">Additional Guests</p>
-          <p class="disclaimer left-align">Leave the box empty if you have no additional guest.</p>
+          <input type="text" name="plus${i + 1}" placeholder="Full Name" value="${plusName}" />
         `;
-        for (let i = 1; i <= guestData; i++) {
-          container.innerHTML += `
-            <input type="text" name="plus${i}" placeholder="Full Name" />
-          `;
-        }
       }
-    }, 300);
-
-    
-    return;
-  }
+    }
+  }, 300);
+}
 });
