@@ -592,7 +592,7 @@ document.getElementById("rsvpStep1").addEventListener("submit", function (e) {
 }
 });
 
-function startAttireRotation(imgElement, imagePaths, boy, colorElement,  interval = 5000) {
+function startAttireRotation(imgElement, imagePaths, boy, colorElement,  interval = 3000) {
     // list.forEach(li => li.classList.remove("active"));
     
     let index = 0;
