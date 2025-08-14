@@ -144,14 +144,14 @@
                             Attire Guide
                         </h3>
                         <div class="text">Dress to match the celebration! <br> What to wear for the ceremony and reception</div>
-                        <div class="text links">VIEW ATTIRE DETAILS</div>
+                        <div class="text links" id="view2">VIEW ATTIRE DETAILS</div>
                     </div>
                     <div class="stay-item">
                         <h3>03. <br>
                             Getting to the Venue
                         </h3>
                         <div class="text">Maps and navigation options <br> to help you arrive smoothly</div>
-                        <div class="text links">GET DIRECTIONS</div>
+                        <div class="text links" id="view3">GET DIRECTIONS</div>
                     </div>
                 </div>
             </div>
@@ -205,7 +205,7 @@
     <!-- Entourage Modal -->
     <div class="overlay hidden" id="entourageOverlay"></div>
     <div id="entourageModal" class="modal hidden">
-    <div id="modalOverlay" class="modal-overlay"></div>
+    <div id="modalEntourageOverlay" class="modal-overlay"></div>
     <div class="modal-content entourage-modal-content">
         <span id="closeEntourageModal" class="close">&times;</span>
 
@@ -290,6 +290,61 @@
         </div>
     </div>
     </div>
+
+    <div id="attireModal" class="modal hidden">
+  <div id="modalAttireOverlay" class="modal-overlay"></div>
+
+  <div class="modal-content attire-content">
+    <span id="closeAttireModals" class="close">&times;</span>
+
+    <h2 class="attire-title">Attire<br><span>Garden Chic</span></h2>
+
+    <div class="attire-flex">
+      <!-- Gentlemen -->
+      <div class="attire-section">
+
+        <div id="boyColors" class="attire-colors">
+          <div class="color-circle" style="background-color:#FFFFF0;"></div>
+          <div class="color-circle" style="background-color:#F5F5DC;"></div>
+          <div class="color-circle" style="background-color:#FFFFFF;"></div>
+        </div>
+
+        <img src="media/boy_attire1.jpg" id="boyAttire" alt="Gentlemen Attire" class="attire-img">
+        <h3>Gentlemen</h3>
+        <ul id="boyAttireList">
+          <li>Barong Tagalog</li>
+          <li>Dress Shirt</li>
+          <li>Trousers</li>
+        </ul>
+      </div>
+
+      <!-- Divider -->
+      <div class="attire-divider"></div>
+
+      <!-- Ladies -->
+      <div class="attire-section">
+        <!-- Color Circles -->
+        <div id="girlColors" class="attire-colors">
+          <div class="color-circle" style="background-color:#919EA4;"></div>
+          <div class="color-circle" style="background-color:#A7A376;"></div>
+          <div class="color-circle" style="background-color:#F2E88A;"></div>
+          <div class="color-circle" style="background-color:#D4B2E4;"></div>
+          <div class="color-circle" style="background-color:#C4A092;"></div>
+        </div>
+
+        <img src="media/girl_attire1.jpg" id="girlAttire" alt="Ladies Attire" class="attire-img">
+        <h3>Ladies</h3>
+        <ul id="girlAttireList">
+          <li>Maxi Dress</li>
+          <li>Midi Dress</li>
+          <li>Jumpsuit</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="attire-note">(Please refrain from wearing denim jeans)</p>
+  </div>
+</div>
 
     <script type="module" src="main.js"></script>
 </body>

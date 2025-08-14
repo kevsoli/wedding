@@ -109,13 +109,29 @@ document.getElementById("view1").onclick = () => {
   document.getElementById('entourageOverlay').classList.add("fade-in2");
 };
 
+document.getElementById("view2").onclick = () => {
+  document.getElementById('attireModal').classList.remove('hidden');
+  document.getElementById('entourageOverlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+
+  document.getElementById('attireModal').classList.add("fade-in");
+  document.getElementById('entourageOverlay').classList.add("fade-in2");
+};
+
 // Close Entourage Modal
 document.getElementById('closeEntourageModal').onclick = () => {
   animateOutEntourage();
 };
-document.getElementById('modalOverlay').onclick = () => {
+document.getElementById('modalEntourageOverlay').onclick = () => {
   animateOutEntourage();
 };
+document.getElementById('closeAttireModals').onclick = () => {
+  animateOutAttire();
+};
+document.getElementById('modalAttireOverlay').onclick = () => {
+  animateOutAttire();
+};
+
 
 function animateOutEntourage() {
   document.getElementById('entourageModal').classList.remove("fade-in");
@@ -129,6 +145,23 @@ function animateOutEntourage() {
     document.getElementById('entourageOverlay').classList.remove("fade-out2");
 
     document.getElementById('entourageModal').classList.add('hidden');
+    document.getElementById('entourageOverlay').classList.add('hidden');
+    document.body.style.overflow = '';
+  }, 300);
+}
+
+function animateOutAttire() {
+  document.getElementById('attireModal').classList.remove("fade-in");
+  document.getElementById('entourageOverlay').classList.remove("fade-in2");
+
+  document.getElementById('attireModal').classList.add("fade-out");
+  document.getElementById('entourageOverlay').classList.add("fade-out2");
+
+  setTimeout(() => {
+    document.getElementById('attireModal').classList.remove("fade-out");
+    document.getElementById('entourageOverlay').classList.remove("fade-out2");
+
+    document.getElementById('attireModal').classList.add('hidden');
     document.getElementById('entourageOverlay').classList.add('hidden');
     document.body.style.overflow = '';
   }, 300);
@@ -558,3 +591,79 @@ document.getElementById("rsvpStep1").addEventListener("submit", function (e) {
   }, 300);
 }
 });
+
+function startAttireRotation(imgElement, imagePaths, boy, colorElement,  interval = 5000) {
+    // list.forEach(li => li.classList.remove("active"));
+    
+    let index = 0;
+
+    setInterval(() => {
+        var list = boyListItems;
+        if (!boy) list = girlListItems;
+
+        list.forEach(li => li.classList.remove("active"));
+
+        imgElement.classList.remove("fade-in3");
+        imgElement.classList.add("fade-out3");
+
+        colorElement.classList.remove("fade-in");
+        colorElement.classList.add("fade-out");
+
+        setTimeout(() => {
+          index = (index + 1) % imagePaths.length;
+          imgElement.src = imagePaths[index];
+
+          list[index].classList.add("active");
+
+          if (boy) {
+            boyColorContainer.innerHTML = ""; // Clear old colors
+
+            boyColors[index].forEach(color => {
+              const circle = document.createElement("div");
+              circle.classList.add("color-circle");
+              circle.style.backgroundColor = color;
+              boyColorContainer.appendChild(circle);
+            });
+          }
+
+          imgElement.classList.remove("fade-out3");
+          imgElement.classList.add("fade-in3");
+
+          colorElement.classList.remove("fade-out");
+          colorElement.classList.add("fade-in");
+        }, 300);
+    }, interval);
+}
+
+// Boy images
+const boyImages = [
+    "media/boy_attire1.jpg",
+    "media/boy_attire2.jpg",
+    "media/boy_attire3.jpg"
+];
+const boyColors = [
+  ["#FFFFF0", "#F5F5DC", "#FFFFFF"], // for attire1
+  ["#919EA4", "#A7A376", "#F2E88A", "#D4B2E4", "#C4A092"], // for attire2
+  ["#000000", "#203354", "#C4A484"]  // for attire3
+];
+const boyAttireImg = document.getElementById("boyAttire");
+const boyListItems = document.querySelectorAll("#boyAttireList li");
+const boyColorContainer = document.getElementById("boyColors");
+// const boyColorCircles = document.querySelectorAll("#boyColors .color-circle");
+
+// Girl images
+const girlImages = [
+    "media/girl_attire1.jpg",
+    "media/girl_attire2.jpg",
+    "media/girl_attire3.jpg"
+];
+const girlAttireImg = document.getElementById("girlAttire");
+const girlListItems = document.querySelectorAll("#girlAttireList li");
+const girlColorContainer = document.getElementById("girlColors");
+// const girlColorCircles = document.querySelectorAll("#girlColors .color-circle");
+
+
+
+// Start both rotations
+startAttireRotation(boyAttireImg, boyImages, true, boyColorContainer);
+startAttireRotation(girlAttireImg, girlImages, false, girlColorContainer);
