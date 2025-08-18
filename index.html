@@ -20,7 +20,7 @@
         <ul class="text">
             <li><a href="#story" >OUR STORY</a></li>
             <li><a href="#stay">WEDDING DETAILS</a></li>
-            <li><a href="#registry" >PROMISES</a></li>
+            <li><a href="#registry" >GRATITUDE</a></li>
         </ul>
     </nav>
 
@@ -162,10 +162,10 @@
                     <h3>Thank You for Celebrating With Us</h3>
                     <div class="text">
                         Your love, prayers, and presence on our wedding day mean the world to us. Truly, that is the greatest gift.
-                        <br><br>If you’re thinking of giving something, a small token toward our future would be deeply appreciated.
+                        <br><br>Should you wish to honor us with a gift, a gesture to support our future together would be deeply appreciated.
                         <br><br>Thank you so much for being part of our story. We can’t wait to celebrate together!
                     </div>
-                    <button class="huge-btn text">BLESS US</button>
+                    <!-- <button class="huge-btn text">BLESS US</button> -->
                 </div>
                 <div class="registry-img registry-img-lg" id="parallax2"></div>
             </div>
@@ -309,13 +309,19 @@
           <div class="color-circle" style="background-color:#FFFFFF;"></div>
         </div>
 
-        <img src="media/boy_attire1.jpg" id="boyAttire" alt="Gentlemen Attire" class="attire-img">
+        <img src="media/boy_attire1.png" id="boyAttire" alt="Gentlemen Attire" class="attire-img">
         <h3>Gentlemen</h3>
-        <ul id="boyAttireList">
+        <!-- <ul id="boyAttireList">
           <li>Barong Tagalog</li>
           <li>Dress Shirt</li>
           <li>Trousers</li>
-        </ul>
+        </ul> -->
+        <!-- <p class="attire-line">Barong Tagalog · Dress Shirt · Trousers</p> -->
+        <p class="attire-line" id="boyAttireLine">
+            <span>Barong Tagalog</span> · 
+            <span>Dress Shirt</span> · 
+            <span>Trousers</span>
+        </p>
       </div>
 
       <!-- Divider -->
@@ -332,17 +338,56 @@
           <div class="color-circle" style="background-color:#C4A092;"></div>
         </div>
 
-        <img src="media/girl_attire1.jpg" id="girlAttire" alt="Ladies Attire" class="attire-img">
+        <img src="media/girl_attire1.png" id="girlAttire" alt="Ladies Attire" class="attire-img">
         <h3>Ladies</h3>
-        <ul id="girlAttireList">
+        <!-- <ul id="girlAttireList">
           <li>Maxi Dress</li>
           <li>Midi Dress</li>
           <li>Jumpsuit</li>
-        </ul>
+        </ul> -->
+        <!-- <p class="attire-line">Maxi Dress · Midi Dress · Jumpsuit</p> -->
+        <p class="attire-line" id="girlAttireLine">
+            <span>Maxi Dress</span> · 
+            <span>Midi Dress</span> · 
+            <span>Jumpsuit</span>
+        </p>
       </div>
     </div>
 
     <p class="attire-note">(Please refrain from wearing denim jeans)</p>
+  </div>
+</div>
+
+<div id="venueModal" class="modal hidden">
+  <div id="modalVenueOverlay" class="modal-overlay"></div>
+
+  <div class="modal-content venue-content">
+    <span id="closeVenueModal" class="close">&times;</span>
+    <h2 class="venue-title">Venue Location Guide</h2>
+    <!-- Hand-drawn church image -->
+    <div class="venue-illustration">
+      <img src="media/church.png" alt="Hand-drawn illustration of Bella Rosa Gardens" />
+    </div>
+
+    
+    <p class="venue-description">
+      Both the church and reception are at the same venue, making travel simple and convenient for all guests.
+    </p>
+
+    <div class="venue-qr-container">
+      <div class="qr-item">
+        <img src="media/googlemaps.png" alt="Google Maps QR" />
+        <p>Google Maps</p>
+      </div>
+      <div class="qr-item">
+        <img src="media/waze.png" alt="Waze QR" />
+        <p>Waze</p>
+      </div>
+    </div>
+
+    <p class="venue-note">
+      You can also search <strong>‘Bella Rosa Gardens’</strong> directly on Waze or Google Maps.
+    </p>
   </div>
 </div>
 

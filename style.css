@@ -726,11 +726,17 @@ input, select, button {
 
 .attire-flex {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: flex-start;
-  gap: 1.5rem;
+  gap: 2rem;
+  margin-top: 1.5rem;
 }
 
 .attire-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1;
   text-align: center;
 }
@@ -747,19 +753,22 @@ input, select, button {
   margin: 0.5rem 0 0;
 }
 .attire-section li {
-  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
+  margin: 0.25rem 0;
 }
 
 .attire-img {
-  width: 100px;
+  max-width: 180px;
   height: auto;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin: 1rem 0;
+  border-radius: 12px;
+  object-fit: cover;
 }
 
 .attire-divider {
-  width: 1px;
-  background: #d9c6b2;
+  width: 2px;
+  background-color: #ddd;
+  margin: 0 1rem;
 }
 
 .attire-note {
@@ -807,13 +816,14 @@ input, select, button {
 .attire-colors {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .color-circle {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   border: 1px solid #ccc;
 }
@@ -844,6 +854,102 @@ input, select, button {
 
 #girlAttireList li.active {
   font-weight: bold;
+}
+
+/* Venue Modal Content */
+.venue-content {
+  position: relative;
+  background: #FFFAF6;;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.venue-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.venue-description {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.venue-qr-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.qr-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-item img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.venue-note {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Responsive: stack vertically on phones */
+@media (max-width: 768px) {
+  .attire-flex {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .attire-divider {
+    display: none; /* hide divider on portrait/phone */
+  }
+
+  .attire-section {
+    width: 100%;
+    align-items: center;
+  }
+
+  .attire-img {
+    max-width: 140px; /* smaller on mobile */
+  }
+}
+
+.attire-line span {
+  font-weight: normal;
+  transition: font-weight 0.2s;
+}
+
+.attire-line span.bold {
+  font-weight: bold;
+  color: #222; /* optional for emphasis */
+}
+
+.venue-illustration {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.venue-illustration img {
+  max-width: 80%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.illustration-caption {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+  font-style: italic;
 }
 
 

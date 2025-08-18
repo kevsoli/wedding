@@ -118,6 +118,15 @@ document.getElementById("view2").onclick = () => {
   document.getElementById('entourageOverlay').classList.add("fade-in2");
 };
 
+document.getElementById("view3").onclick = () => {
+  document.getElementById('venueModal').classList.remove('hidden');
+  document.getElementById('entourageOverlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+
+  document.getElementById('venueModal').classList.add("fade-in");
+  document.getElementById('entourageOverlay').classList.add("fade-in2");
+};
+
 // Close Entourage Modal
 document.getElementById('closeEntourageModal').onclick = () => {
   animateOutEntourage();
@@ -130,6 +139,12 @@ document.getElementById('closeAttireModals').onclick = () => {
 };
 document.getElementById('modalAttireOverlay').onclick = () => {
   animateOutAttire();
+};
+document.getElementById('closeVenueModal').onclick = () => {
+  animateOutVenue();
+};
+document.getElementById('modalVenueOverlay').onclick = () => {
+  animateOutVenue();
 };
 
 
@@ -162,6 +177,23 @@ function animateOutAttire() {
     document.getElementById('entourageOverlay').classList.remove("fade-out2");
 
     document.getElementById('attireModal').classList.add('hidden');
+    document.getElementById('entourageOverlay').classList.add('hidden');
+    document.body.style.overflow = '';
+  }, 300);
+}
+
+function animateOutVenue() {
+  document.getElementById('venueModal').classList.remove("fade-in");
+  document.getElementById('entourageOverlay').classList.remove("fade-in2");
+
+  document.getElementById('venueModal').classList.add("fade-out");
+  document.getElementById('entourageOverlay').classList.add("fade-out2");
+
+  setTimeout(() => {
+    document.getElementById('venueModal').classList.remove("fade-out");
+    document.getElementById('entourageOverlay').classList.remove("fade-out2");
+
+    document.getElementById('venueModal').classList.add('hidden');
     document.getElementById('entourageOverlay').classList.add('hidden');
     document.body.style.overflow = '';
   }, 300);
@@ -598,22 +630,22 @@ function startAttireRotation(imgElement, imagePaths, boy, colorElement,  interva
     let index = 0;
 
     setInterval(() => {
-        var list = boyListItems;
-        if (!boy) list = girlListItems;
+        var list = boyListItems.querySelectorAll("span");
+        if (!boy) list = girlListItems.querySelectorAll("span");
 
-        list.forEach(li => li.classList.remove("active"));
+        list.forEach(li => li.classList.remove("bold"));
 
-        imgElement.classList.remove("fade-in3");
-        imgElement.classList.add("fade-out3");
+        imgElement.classList.remove("fade-in");
+        imgElement.classList.add("fade-out");
 
         colorElement.classList.remove("fade-in");
         colorElement.classList.add("fade-out");
 
         setTimeout(() => {
           index = (index + 1) % imagePaths.length;
-          imgElement.src = imagePaths[index];
+          imgElement.src = imagePaths[index].src;
 
-          list[index].classList.add("active");
+          list[index].classList.add("bold");
 
           if (boy) {
             boyColorContainer.innerHTML = ""; // Clear old colors
@@ -626,8 +658,8 @@ function startAttireRotation(imgElement, imagePaths, boy, colorElement,  interva
             });
           }
 
-          imgElement.classList.remove("fade-out3");
-          imgElement.classList.add("fade-in3");
+          imgElement.classList.remove("fade-out");
+          imgElement.classList.add("fade-in");
 
           colorElement.classList.remove("fade-out");
           colorElement.classList.add("fade-in");
@@ -637,9 +669,9 @@ function startAttireRotation(imgElement, imagePaths, boy, colorElement,  interva
 
 // Boy images
 const boyImages = [
-    "media/boy_attire1.jpg",
-    "media/boy_attire2.jpg",
-    "media/boy_attire3.jpg"
+    "media/boy_attire1.png",
+    "media/boy_attire2.png",
+    "media/boy_attire3.png"
 ];
 const boyColors = [
   ["#FFFFF0", "#F5F5DC", "#FFFFFF"], // for attire1
@@ -647,23 +679,36 @@ const boyColors = [
   ["#000000", "#203354", "#C4A484"]  // for attire3
 ];
 const boyAttireImg = document.getElementById("boyAttire");
-const boyListItems = document.querySelectorAll("#boyAttireList li");
+const boyListItems = document.getElementById("boyAttireLine");
 const boyColorContainer = document.getElementById("boyColors");
 // const boyColorCircles = document.querySelectorAll("#boyColors .color-circle");
 
 // Girl images
 const girlImages = [
-    "media/girl_attire1.jpg",
-    "media/girl_attire2.jpg",
-    "media/girl_attire3.jpg"
+    "media/girl_attire1.png",
+    "media/girl_attire2.png",
+    "media/girl_attire3.png"
 ];
 const girlAttireImg = document.getElementById("girlAttire");
-const girlListItems = document.querySelectorAll("#girlAttireList li");
+const girlListItems = document.getElementById("girlAttireLine");
 const girlColorContainer = document.getElementById("girlColors");
 // const girlColorCircles = document.querySelectorAll("#girlColors .color-circle");
 
+function preloadImages(paths) {
+  var preloadedImages = [];
 
+  paths.forEach((path, i) => {
+    const img = new Image();
+    img.src = path;
+    preloadedImages[i] = img;
+  });
+
+  return preloadedImages;
+}
+
+var preloadedBoyImages = preloadImages(boyImages);
+var preloadedGirlImages = preloadImages(girlImages);
 
 // Start both rotations
-startAttireRotation(boyAttireImg, boyImages, true, boyColorContainer);
-startAttireRotation(girlAttireImg, girlImages, false, girlColorContainer);
+startAttireRotation(boyAttireImg, preloadedBoyImages, true, boyColorContainer);
+startAttireRotation(girlAttireImg, preloadedGirlImages, false, girlColorContainer);
