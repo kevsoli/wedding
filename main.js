@@ -86,6 +86,12 @@ for (var i = 0; i < reveals.length; i++) {
   
 window.addEventListener("scroll", reveal);
 
+document.querySelectorAll("nav ul li a").forEach(link => {
+  link.addEventListener("click", () => {
+    document.getElementById("check").checked = false;
+  });
+});
+
 // const guestList = {
 //   "kevin soliman": 4,
 //   "sarah cruz": 2,
